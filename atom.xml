@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-24T06:39:53.991Z</updated>
+  <updated>2016-11-24T07:04:52.611Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,14 +16,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>轮播图------淡入淡出</title>
     <link href="http://yoursite.com/2016/11/24/JQ%E6%B7%A1%E5%85%A5%E6%B7%A1%E5%87%BA/"/>
     <id>http://yoursite.com/2016/11/24/JQ淡入淡出/</id>
-    <published>2016-11-24T06:39:53.990Z</published>
-    <updated>2016-11-24T06:39:53.991Z</updated>
+    <published>2016-11-24T07:04:52.610Z</published>
+    <updated>2016-11-24T07:04:52.611Z</updated>
     
-    <content type="html"><![CDATA[<hr>
-<h2 id="title-轮播图——淡入淡出"><a href="#title-轮播图——淡入淡出" class="headerlink" title="title: 轮播图——淡入淡出"></a>title: 轮播图——淡入淡出</h2><h2 id="JQ淡入淡出效果实例"><a href="#JQ淡入淡出效果实例" class="headerlink" title="JQ淡入淡出效果实例"></a>JQ淡入淡出效果实例</h2><h5 id="1、思路："><a href="#1、思路：" class="headerlink" title="1、思路："></a>1、思路：</h5><pre><code>（1）html的布局:
+    <content type="html"><![CDATA[<h2 id="JQ淡入淡出效果实例"><a href="#JQ淡入淡出效果实例" class="headerlink" title="JQ淡入淡出效果实例"></a>JQ淡入淡出效果实例</h2><h5 id="1、思路："><a href="#1、思路：" class="headerlink" title="1、思路："></a>1、思路：</h5><pre><code>（1）html的布局:
     首先来个最外层容器，往里面放两个子元素，一个是用来放图片，另一个自然是放焦点；
 （2）css样式设置
     最外层的容器添加上相对定位，里面的放图片的容器用绝对定位，里面的每个图片元素或者放图片的元素都用绝对定位，并且top和left属性值都为‘0’。
@@ -108,8 +107,7 @@ $(function(){
     
     <summary type="html">
     
-      &lt;hr&gt;
-&lt;h2 id=&quot;title-轮播图——淡入淡出&quot;&gt;&lt;a href=&quot;#title-轮播图——淡入淡出&quot; class=&quot;headerlink&quot; title=&quot;title: 轮播图——淡入淡出&quot;&gt;&lt;/a&gt;title: 轮播图——淡入淡出&lt;/h2&gt;&lt;h2 id=&quot;JQ淡入淡出
+      &lt;h2 id=&quot;JQ淡入淡出效果实例&quot;&gt;&lt;a href=&quot;#JQ淡入淡出效果实例&quot; class=&quot;headerlink&quot; title=&quot;JQ淡入淡出效果实例&quot;&gt;&lt;/a&gt;JQ淡入淡出效果实例&lt;/h2&gt;&lt;h5 id=&quot;1、思路：&quot;&gt;&lt;a href=&quot;#1、思路：&quot; class=&quot;he
     
     </summary>
     
