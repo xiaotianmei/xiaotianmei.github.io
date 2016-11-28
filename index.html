@@ -44,7 +44,7 @@
 				<h1 class="site-name"><a href="/" title="xiaotianmei&#39;s Blog">xiaotianmei&#39;s Blog</a></h1>
 				<h2 class="blog-motto"></h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -60,7 +60,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>搜索</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -85,18 +85,20 @@
 		<a href="/about" title="XiaoTianMei" target="_blank" itemprop="author">XiaoTianMei</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-28T08:09:10.000Z" itemprop="datePublished"> Published 2016-11-28</time>
+    <time datetime="2016-11-28T08:09:10.000Z" itemprop="datePublished"> 發表於 2016-11-28</time>
     
   </p>
 </header>
     <div class="article-content">
         
         <h2 id="电梯导航的实现–JQ"><a href="#电梯导航的实现–JQ" class="headerlink" title="电梯导航的实现–JQ"></a>电梯导航的实现–JQ</h2><h5 id="电梯导航在各类电商网站里层出不穷，要想实现此效果，首先要了解到："><a href="#电梯导航在各类电商网站里层出不穷，要想实现此效果，首先要了解到：" class="headerlink" title="电梯导航在各类电商网站里层出不穷，要想实现此效果，首先要了解到："></a>电梯导航在各类电商网站里层出不穷，要想实现此效果，首先要了解到：</h5><pre><code>(1) scroll()方法
-    当用户滚动指定的元素时，会发生 scroll 事件。scroll 事件适用于所有可滚动的元素和 window 对象（浏览器窗口）。scroll() 方法触发 scroll 事件，或规定当发生 scroll 事件时运行的函数。
+    当用户滚动指定的元素时，会发生 scroll 事件。scroll 事件适用于所有可滚动的元素和 window 对象（浏览器窗口）。
+    scroll() 方法触发 scroll 事件，或规定当发生 scroll 事件时运行的函数。
 （2） scrollTop() 方法
     scrollTop() 方法返回或设置匹配元素的滚动条的垂直位置。scroll top offset 指的是滚动条相对于其顶部的偏移。
 （3）  offset() 方法
-    offset() 方法返回或设置匹配元素相对于文档的偏移（位置）。该方法返回的对象包含两个整型属性：top 和 left，以像素计。此方法只对可见元素有效。
+    offset() 方法返回或设置匹配元素相对于文档的偏移（位置）。该方法返回的对象包含两个整型属性：top 和 left，以像素
+    计。此方法只对可见元素有效。
 </code></pre><h6 id="1、电梯导航HTML布局："><a href="#1、电梯导航HTML布局：" class="headerlink" title="1、电梯导航HTML布局："></a>1、电梯导航HTML布局：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;side-nav&quot;&gt;</div><div class="line">	&lt;span class=&quot;active&quot;&gt;1&lt;/span&gt;</div><div class="line">	&lt;span&gt;2&lt;/span&gt;</div><div class="line">	&lt;span&gt;3&lt;/span&gt;</div><div class="line">	&lt;span&gt;4&lt;/span&gt;</div><div class="line">	&lt;span&gt;5&lt;/span&gt;</div><div class="line">	&lt;span&gt;6&lt;/span&gt;</div><div class="line">	&lt;span&gt;7&lt;/span&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;div class=&quot;floor floor-01&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-02&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-03&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-04&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-05&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-06&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-07&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;footer&quot;&gt;&lt;/div&gt;</div></pre></td></tr></table></figure>
 <h6 id="2、电梯导航CSS样式："><a href="#2、电梯导航CSS样式：" class="headerlink" title="2、电梯导航CSS样式："></a>2、电梯导航CSS样式：</h6><pre><code>定位方式采用的是固定定位，导航栏部分紧贴在浏览器左侧。
 </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">*&#123;margin:0;padding:0;&#125;</div><div class="line">	.side-nav&#123;</div><div class="line">		width:50px;</div><div class="line">		position:fixed;</div><div class="line">		left:0;</div><div class="line">		top:20%;</div><div class="line">		background:chocolate;</div><div class="line">	&#125;</div><div class="line">	.side-nav span&#123;</div><div class="line">		display:block;</div><div class="line">		width:50px;</div><div class="line">		height:50px;</div><div class="line">		text-align: center;</div><div class="line">		line-height: 50px;</div><div class="line">		color:#FFF;</div><div class="line">		cursor: pointer;</div><div class="line">	&#125;</div><div class="line">	.side-nav .active&#123;</div><div class="line">		border:2px solid #FFF;</div><div class="line">	&#125;</div><div class="line">	.floor&#123;</div><div class="line">		width:100%;</div><div class="line">		height:400px;</div><div class="line">		margin-bottom: 20px;</div><div class="line">		background: pink;</div><div class="line">	&#125;</div><div class="line">	.footer&#123;</div><div class="line">		width:100%;</div><div class="line">		height:300px;</div><div class="line">		background: pink;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
@@ -149,7 +151,7 @@
 		<a href="/about" title="XiaoTianMei" target="_blank" itemprop="author">XiaoTianMei</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-25T14:36:54.949Z" itemprop="datePublished"> Published 2016-11-25</time>
+    <time datetime="2016-11-25T14:36:54.949Z" itemprop="datePublished"> 發表於 2016-11-25</time>
     
   </p>
 </header>
@@ -201,7 +203,7 @@
 		<a href="/about" title="XiaoTianMei" target="_blank" itemprop="author">XiaoTianMei</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-24T07:35:49.000Z" itemprop="datePublished"> Published 2016-11-24</time>
+    <time datetime="2016-11-24T07:35:49.000Z" itemprop="datePublished"> 發表於 2016-11-24</time>
     
   </p>
 </header>
@@ -257,10 +259,10 @@
 
 
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
 
   
@@ -270,7 +272,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">Tags</p>
+	<p class="asidetitle">標簽</p>
 		<ul class="clearfix">
 		
 			
@@ -278,11 +280,11 @@
 			
 		
 			
-				<li><a href="/tags/轮播图/" title="轮播图">轮播图<sup>1</sup></a></li>
+				<li><a href="/tags/导航/" title="导航">导航<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/导航/" title="导航">导航<sup>1</sup></a></li>
+				<li><a href="/tags/轮播图/" title="轮播图">轮播图<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -290,7 +292,7 @@
 
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情鏈接</p>
     <ul>
         
           <li>
@@ -312,11 +314,11 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
 </div>
 
   <div class="weiboshow">
-  <p class="asidetitle">Weibo</p>
+  <p class="asidetitle">新浪微博</p>
     <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
 </div>
 
@@ -466,7 +468,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
