@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-24T11:15:59.096Z</updated>
+  <updated>2016-11-28T08:46:08.456Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,20 +16,81 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>电梯导航</title>
+    <link href="http://yoursite.com/2016/11/28/%E7%94%B5%E6%A2%AF%E5%AF%BC%E8%88%AA/"/>
+    <id>http://yoursite.com/2016/11/28/电梯导航/</id>
+    <published>2016-11-28T08:09:10.000Z</published>
+    <updated>2016-11-28T08:46:08.456Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="电梯导航的实现–JQ"><a href="#电梯导航的实现–JQ" class="headerlink" title="电梯导航的实现–JQ"></a>电梯导航的实现–JQ</h2><h5 id="电梯导航在各类电商网站里层出不穷，要想实现此效果，首先要了解到："><a href="#电梯导航在各类电商网站里层出不穷，要想实现此效果，首先要了解到：" class="headerlink" title="电梯导航在各类电商网站里层出不穷，要想实现此效果，首先要了解到："></a>电梯导航在各类电商网站里层出不穷，要想实现此效果，首先要了解到：</h5><pre><code>(1) scroll()方法
+    当用户滚动指定的元素时，会发生 scroll 事件。scroll 事件适用于所有可滚动的元素和 window 对象（浏览器窗口）。scroll() 方法触发 scroll 事件，或规定当发生 scroll 事件时运行的函数。
+（2） scrollTop() 方法
+    scrollTop() 方法返回或设置匹配元素的滚动条的垂直位置。scroll top offset 指的是滚动条相对于其顶部的偏移。
+（3）  offset() 方法
+    offset() 方法返回或设置匹配元素相对于文档的偏移（位置）。该方法返回的对象包含两个整型属性：top 和 left，以像素计。此方法只对可见元素有效。
+</code></pre><h6 id="1、电梯导航HTML布局："><a href="#1、电梯导航HTML布局：" class="headerlink" title="1、电梯导航HTML布局："></a>1、电梯导航HTML布局：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;side-nav&quot;&gt;</div><div class="line">	&lt;span class=&quot;active&quot;&gt;1&lt;/span&gt;</div><div class="line">	&lt;span&gt;2&lt;/span&gt;</div><div class="line">	&lt;span&gt;3&lt;/span&gt;</div><div class="line">	&lt;span&gt;4&lt;/span&gt;</div><div class="line">	&lt;span&gt;5&lt;/span&gt;</div><div class="line">	&lt;span&gt;6&lt;/span&gt;</div><div class="line">	&lt;span&gt;7&lt;/span&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;div class=&quot;floor floor-01&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-02&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-03&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-04&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-05&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-06&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;floor floor-07&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;div class=&quot;footer&quot;&gt;&lt;/div&gt;</div></pre></td></tr></table></figure>
+<h6 id="2、电梯导航CSS样式："><a href="#2、电梯导航CSS样式：" class="headerlink" title="2、电梯导航CSS样式："></a>2、电梯导航CSS样式：</h6><pre><code>定位方式采用的是固定定位，导航栏部分紧贴在浏览器左侧。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">*&#123;margin:0;padding:0;&#125;</div><div class="line">	.side-nav&#123;</div><div class="line">		width:50px;</div><div class="line">		position:fixed;</div><div class="line">		left:0;</div><div class="line">		top:20%;</div><div class="line">		background:chocolate;</div><div class="line">	&#125;</div><div class="line">	.side-nav span&#123;</div><div class="line">		display:block;</div><div class="line">		width:50px;</div><div class="line">		height:50px;</div><div class="line">		text-align: center;</div><div class="line">		line-height: 50px;</div><div class="line">		color:#FFF;</div><div class="line">		cursor: pointer;</div><div class="line">	&#125;</div><div class="line">	.side-nav .active&#123;</div><div class="line">		border:2px solid #FFF;</div><div class="line">	&#125;</div><div class="line">	.floor&#123;</div><div class="line">		width:100%;</div><div class="line">		height:400px;</div><div class="line">		margin-bottom: 20px;</div><div class="line">		background: pink;</div><div class="line">	&#125;</div><div class="line">	.footer&#123;</div><div class="line">		width:100%;</div><div class="line">		height:300px;</div><div class="line">		background: pink;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h6 id="3、实现最终效果："><a href="#3、实现最终效果：" class="headerlink" title="3、实现最终效果："></a>3、实现最终效果：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	&lt;script&gt;</div><div class="line">	$(function()&#123;</div><div class="line">		var colorArr = [&apos;red&apos;,&apos;orange&apos;,&apos;yellow&apos;,&apos;green&apos;,&apos;blue&apos;,&apos;cyan&apos;,&apos;purple&apos;];</div><div class="line">		for(i=0;i&lt;$(&apos;.side-nav span&apos;).length;i++)&#123;</div><div class="line">			$(&apos;.side-nav span&apos;).eq(i).css(&#123;background:colorArr[i]&#125;);</div><div class="line">			$(&apos;.floor&apos;).eq(i).css(&#123;background:colorArr[i]&#125;);</div><div class="line">		&#125;</div><div class="line">		//获取各个楼层的距离浏览器上部偏移量；</div><div class="line">		var divTopArr = [];</div><div class="line">		for(var i=0;i&lt;$(&apos;.floor&apos;).length;i++)&#123;</div><div class="line">			divTopArr.push($(&apos;.floor&apos;).eq(i).offset().top);</div><div class="line">		&#125;</div><div class="line">		//console.log(divTopArr);</div><div class="line">		</div><div class="line">		$(&apos;.side-nav span&apos;).click(function()&#123;</div><div class="line">			$(&apos;body,html&apos;).animate(&#123;scrollTop:divTopArr[$(this).index()]+&apos;px&apos;&#125;);</div><div class="line">			$(&apos;.side-nav span&apos;).removeClass(&apos;active&apos;);</div><div class="line">			$(this).addClass(&apos;active&apos;);</div><div class="line">		&#125;)</div><div class="line">		</div><div class="line">		</div><div class="line">		</div><div class="line">		$(window).scroll(function()&#123;</div><div class="line">			var scrollTop = $(window).scrollTop();</div><div class="line">			//divTopArr</div><div class="line">			for(i=0;i&lt;$(&apos;.side-nav span&apos;).length;i++)&#123;</div><div class="line">				if(scrollTop &lt; divTopArr[divTopArr.length-1])&#123;</div><div class="line">					if(scrollTop &gt;= divTopArr[i] &amp;&amp; scrollTop &lt; divTopArr[i+1])&#123;</div><div class="line">						$(&apos;.side-nav span&apos;).removeClass(&apos;active&apos;);</div><div class="line">						$(&apos;.side-nav span&apos;).eq(i).addClass(&apos;active&apos;);</div><div class="line">					&#125;</div><div class="line">				&#125;else&#123;</div><div class="line">					$(&apos;.side-nav span&apos;).removeClass(&apos;active&apos;);</div><div class="line">					$(&apos;.side-nav span&apos;).eq(divTopArr.length-1).addClass(&apos;active&apos;);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;)</div><div class="line"></div><div class="line">	&#125;)</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;电梯导航的实现–JQ&quot;&gt;&lt;a href=&quot;#电梯导航的实现–JQ&quot; class=&quot;headerlink&quot; title=&quot;电梯导航的实现–JQ&quot;&gt;&lt;/a&gt;电梯导航的实现–JQ&lt;/h2&gt;&lt;h5 id=&quot;电梯导航在各类电商网站里层出不穷，要想实现此效果，首先要了解到：&quot;
+    
+    </summary>
+    
+    
+      <category term="JQ" scheme="http://yoursite.com/tags/JQ/"/>
+    
+      <category term="导航" scheme="http://yoursite.com/tags/%E5%AF%BC%E8%88%AA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>欢迎大家来到恬儿妹的窝</title>
+    <link href="http://yoursite.com/2016/11/25/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/"/>
+    <id>http://yoursite.com/2016/11/25/新建文本文档/</id>
+    <published>2016-11-25T14:36:54.949Z</published>
+    <updated>2016-11-27T14:03:05.710Z</updated>
+    
+    <content type="html"><![CDATA[<p>烦请各位不吝请教哦</p>
+<blockquote>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;烦请各位不吝请教哦&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;/blockquote&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>轮播图----淡入淡出</title>
     <link href="http://yoursite.com/2016/11/24/JQ%E8%BD%AE%E6%92%AD-%E6%B7%A1%E5%85%A5%E6%B7%A1%E5%87%BA/"/>
     <id>http://yoursite.com/2016/11/24/JQ轮播-淡入淡出/</id>
     <published>2016-11-24T07:35:49.000Z</published>
-    <updated>2016-11-24T11:15:59.096Z</updated>
+    <updated>2016-11-27T14:13:36.040Z</updated>
     
     <content type="html"><![CDATA[<h2 id="JQ淡入淡出效果实例"><a href="#JQ淡入淡出效果实例" class="headerlink" title="JQ淡入淡出效果实例"></a>JQ淡入淡出效果实例</h2><h5 id="1、思路："><a href="#1、思路：" class="headerlink" title="1、思路："></a>1、思路：</h5><pre><code>（1）html的布局:
     首先来个最外层容器，往里面放两个子元素，一个是用来放图片，另一个自然是放焦点；
 （2）css样式设置
-    最外层的容器添加上相对定位，里面的放图片的容器用绝对定位，里面的每个图片元素或者放图片的元素都用绝对定位，并且top和left属性值都为‘0’。
-    放焦点的容器用绝对定位，防止出现叠放元素引起的覆盖，也是为了让焦点能更好控制布局，（注意：焦点一定要用&quot;display:inline-block&quot;，这样是为了让焦点都能自动居中，他的父级元素当然要有&quot;text-align:center&quot;，这样可以让不管有多少个焦点都能自动让焦点居中。视觉效果更好一些。）
+    最外层的容器添加上相对定位，里面的放图片的容器用绝对定位，里面的每个图片元素或者放图片的元素都用绝对定位，并且top
+    和left属性值都为‘0’。
+    放焦点的容器用绝对定位，防止出现叠放元素引起的覆盖，也是为了让焦点能更好控制布局，（注意：焦点一定要用
+    &quot;display:inline-block&quot;，这样是为了让焦点都能自动居中，他的父级元素当然要有&quot;text-align:center&quot;，这样可以让不管
+    有多少个焦点都能自动让焦点居中。视觉效果更好一些。）
 （3）js部分
-    用js创建相应个数的焦点,用排他思想（先设置所有同类元素，再设置其中某一个使其不同于其他同类元素），和选项卡的思想一样，利用全局变量，定时器循环播放，就是这么 easy！代码相对应有详细备注说明
-</code></pre><h5 id="2、代码"><a href="#2、代码" class="headerlink" title="2、代码"></a>2、代码</h5><pre><code>
+    用js创建相应个数的焦点,用排他思想（先设置所有同类元素，再设置其中某一个使其不同于其他同类元素），和选项卡的思想一
+    样，利用全局变量，定时器循环播放，就是这么 easy！代码相对应有详细备注说明
+</code></pre><a id="more"></a>
+<h5 id="2、代码"><a href="#2、代码" class="headerlink" title="2、代码"></a>2、代码</h5><pre><code>
 $(function(){
     //讲变量设为空；此为全局变量
     var timer = null;
@@ -107,7 +168,18 @@ $(function(){
     
     <summary type="html">
     
-      &lt;h2 id=&quot;JQ淡入淡出效果实例&quot;&gt;&lt;a href=&quot;#JQ淡入淡出效果实例&quot; class=&quot;headerlink&quot; title=&quot;JQ淡入淡出效果实例&quot;&gt;&lt;/a&gt;JQ淡入淡出效果实例&lt;/h2&gt;&lt;h5 id=&quot;1、思路：&quot;&gt;&lt;a href=&quot;#1、思路：&quot; class=&quot;he
+      &lt;h2 id=&quot;JQ淡入淡出效果实例&quot;&gt;&lt;a href=&quot;#JQ淡入淡出效果实例&quot; class=&quot;headerlink&quot; title=&quot;JQ淡入淡出效果实例&quot;&gt;&lt;/a&gt;JQ淡入淡出效果实例&lt;/h2&gt;&lt;h5 id=&quot;1、思路：&quot;&gt;&lt;a href=&quot;#1、思路：&quot; class=&quot;headerlink&quot; title=&quot;1、思路：&quot;&gt;&lt;/a&gt;1、思路：&lt;/h5&gt;&lt;pre&gt;&lt;code&gt;（1）html的布局:
+    首先来个最外层容器，往里面放两个子元素，一个是用来放图片，另一个自然是放焦点；
+（2）css样式设置
+    最外层的容器添加上相对定位，里面的放图片的容器用绝对定位，里面的每个图片元素或者放图片的元素都用绝对定位，并且top
+    和left属性值都为‘0’。
+    放焦点的容器用绝对定位，防止出现叠放元素引起的覆盖，也是为了让焦点能更好控制布局，（注意：焦点一定要用
+    &amp;quot;display:inline-block&amp;quot;，这样是为了让焦点都能自动居中，他的父级元素当然要有&amp;quot;text-align:center&amp;quot;，这样可以让不管
+    有多少个焦点都能自动让焦点居中。视觉效果更好一些。）
+（3）js部分
+    用js创建相应个数的焦点,用排他思想（先设置所有同类元素，再设置其中某一个使其不同于其他同类元素），和选项卡的思想一
+    样，利用全局变量，定时器循环播放，就是这么 easy！代码相对应有详细备注说明
+&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     
@@ -115,26 +187,6 @@ $(function(){
       <category term="JQ" scheme="http://yoursite.com/tags/JQ/"/>
     
       <category term="轮播图" scheme="http://yoursite.com/tags/%E8%BD%AE%E6%92%AD%E5%9B%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>欢迎大家来到恬儿妹的窝</title>
-    <link href="http://yoursite.com/2016/11/21/%E6%96%B0%E5%BB%BA%E6%96%87%E6%9C%AC%E6%96%87%E6%A1%A3/"/>
-    <id>http://yoursite.com/2016/11/21/新建文本文档/</id>
-    <published>2016-11-21T14:22:59.851Z</published>
-    <updated>2016-11-21T14:22:59.851Z</updated>
-    
-    <content type="html"><![CDATA[<p>烦请各位不吝请教哦</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;烦请各位不吝请教哦&lt;/p&gt;
-
-    
-    </summary>
-    
     
   </entry>
   

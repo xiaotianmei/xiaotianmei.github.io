@@ -1,10 +1,10 @@
 
-  <!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html >
 <head>
   <meta charset="UTF-8">
   
-    <title>Archives: 2016/11 | xiaotianmei&#39;s Blog</title>
+    <title>categories | xiaotianmei&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="XiaoTianMei">
@@ -12,11 +12,12 @@
 
     
     <meta property="og:type" content="website">
-<meta property="og:title" content="xiaotianmei's Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2016/11/index.html">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://yoursite.com/categories/index.html">
 <meta property="og:site_name" content="xiaotianmei's Blog">
+<meta property="og:updated_time" content="2016-11-25T14:31:49.680Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="xiaotianmei's Blog">
+<meta name="twitter:title" content="categories">
 
     
     <link rel="alternative" href="/atom.xml" title="xiaotianmei&#39;s Blog" type="application/atom+xml">
@@ -70,61 +71,15 @@
 </div>
       </header>
       <div id="container">
-        
-
+          
 <div class="archive-title" >
-  <h2 class="archive-icon">2016/11</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">Nov 2016</a><span class="archive-list-count">3</span></li></ul>
- </div>
-  
+<h2 class="category-icon">Categories</h2>
+
 </div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2016/11/28/电梯导航/" title="电梯导航" itemprop="url">
-  
-
-    <time datetime="2016-11-28T08:09:10.000Z" itemprop="datePublished">2016-11-28</time>
-
-
-    <h1 itemprop="name">电梯导航</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2016/11/25/新建文本文档/" title="欢迎大家来到恬儿妹的窝" itemprop="url">
-  
-
-    <time datetime="2016-11-25T14:36:54.949Z" itemprop="datePublished">2016-11-25</time>
-
-
-    <h1 itemprop="name">欢迎大家来到恬儿妹的窝</h1>
-
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2016/11/24/JQ轮播-淡入淡出/" title="轮播图----淡入淡出" itemprop="url">
-  
-
-    <time datetime="2016-11-24T07:35:49.000Z" itemprop="datePublished">2016-11-24</time>
-
-
-    <h1 itemprop="name">轮播图----淡入淡出</h1>
-
-  </a>
-</section>
-
-
-  </div>
+<div id="main" class="archive-part">
+<div class="all-list-box"></div>
 </div>
+
 
       </div>
       <footer><div id="footer" >
@@ -223,6 +178,24 @@ $(document).ready(function(){
 
 
 
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var list    = $('.archive-title a'),
+      box     = $('.all-list-box'),
+      first   = $('.archive-title a:first-of-type');
+      box.load(first.attr('data-src').toString()+' #archive-page');
+      first.addClass('current');
+  list.each(function(){
+    $(this).click(function(){
+      var listSrc=$(this).attr('data-src').toString()+' #archive-page';
+      box.load(listSrc);
+      list.removeClass('current');
+      $(this).addClass('current');
+     });  
+    });
+  }); 
+</script>
 
 
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
